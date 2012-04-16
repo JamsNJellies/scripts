@@ -9,7 +9,6 @@
 
 #browser='firefox'
 browser='chromium'
-#browser='polisher'
 
 [[ -n "$DISPLAY" ]] || exit 1
 

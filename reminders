@@ -1,3 +1,4 @@
-# script to pop-up daily reminders
+#!/bin/sh
+# pop-up daily reminders
 
 remind -q -g ~/.reminders | xmessage -title "Today's Reminders" -center -file - 

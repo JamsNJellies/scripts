@@ -1,3 +1,4 @@
+#!/bin/sh
 # script to display core temperature
 
 acore=`sensors | grep 'Core 0:' | awk '{print $3}' | cut -b2,3,6,7,8`
