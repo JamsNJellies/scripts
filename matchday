@@ -1,0 +1,4 @@
+#!/bin/bash
+# EPL results for a given day
+
+lynx -nonumbers -dump http://www.premierleague.com/en-gb/matchday/results.html?paramClubId=ALL | grep -m 1 -A10 "$1" | xmessage -center -file -

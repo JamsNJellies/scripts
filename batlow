@@ -1,0 +1,3 @@
+#!/bin/bash
+# batlow Critical battery warning indicator using xmessage to alert
+aplay ~/.xmonad/data/sounds/message2.wav && xmessage -center "BATTERY IS CRITICALLY LOW SHUTDOWN OR PLUG IN NOW"

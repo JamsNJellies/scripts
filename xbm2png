@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# convert .xbm files to .png
+for icon in $(ls *.xbm)
+  do
+    convert $icon $icon.png
+  done
+echo "Success..."
