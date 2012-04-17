@@ -25,7 +25,7 @@ declare -A choices
 choices[logout]='pkill X'
 
 if [[ "$1" == '--no-sudo' ]]; then
-  choices[shutdown]='systemctl shutdown'
+  choices[shutdown]='systemctl poweroff'
   choices[reboot]='systemctl reboot'
 
   if have pm-suspend; then
@@ -38,7 +38,7 @@ if [[ "$1" == '--no-sudo' ]]; then
 else
   have sudo || errorout 'no sudo binary found'
 
-  choices[shutdown]='sudo sytemctl shutdown'
+  choices[shutdown]='sudo sytemctl poweroff'
   choices[reboot]='sudo systemctl reboot'
 
   if have pm-suspend; then
