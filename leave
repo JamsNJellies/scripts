@@ -38,7 +38,7 @@ if [[ "$1" == '--no-sudo' ]]; then
 else
   have sudo || errorout 'no sudo binary found'
 
-  choices[shutdown]='sudo sytemctl poweroff'
+  choices[shutdown]='sudo systemctl poweroff'
   choices[reboot]='sudo systemctl reboot'
 
   if have pm-suspend; then
