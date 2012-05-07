@@ -1,7 +1,0 @@
-#!/bin/bash
-
-curl https://www.archlinux.org/{developers,trustedusers}/ |
-awk -F\" '(/pgp.mit.edu/) {sub(/.*search=0x/,"");print $1}' |
-xargs pacman-key --recv-keys
-
-
