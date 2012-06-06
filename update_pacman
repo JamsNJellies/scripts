@@ -19,5 +19,5 @@ fi
 
 let packages=${pkgs}+${aurpkgs}
 if [[ ${packages} -gt 0 ]]; then
-    xmessage -title "Package Updates" -center "There are ${packages} out of date packages (${msg1}${msg2})"
+    xmessage -title "Package Updates" -timeout 20 -center "There are ${packages} out of date packages (${msg1}${msg2})"
 fi
