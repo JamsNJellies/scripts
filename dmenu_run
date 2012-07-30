@@ -19,7 +19,7 @@ getbins() {
   cat "$cache"
 }
 
-cmd=$(getbins | dmenu $DMENU_OPTIONS)
+cmd=$(getbins | dmenu ${DMENU_OPTIONS:--i})
 
 # dispatch!
 case $cmd in
