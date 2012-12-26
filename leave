@@ -4,11 +4,9 @@
 #
 # a simple shut-down dialog implemented via dmenu
 # 
-# note: requires NOPASWD entries for the commands involved (when not
-# using --no-sudo).
+# note: requires NOPASWD entries for the commands involved
 #
 # todo:
-#       remove duplicate code re: --no-sudo
 #       verify bash version supports assoc arrays
 #
 ###
@@ -23,32 +21,9 @@ have() { which $1 &>/dev/null; }
 declare -A choices
 
 choices[logout]='pkill X'
-
-if [[ "$1" == '--no-sudo' ]]; then
-  choices[shutdown]='systemctl poweroff'
-  choices[reboot]='systemctl reboot'
-
-  if have pm-suspend; then
-    choices[suspend]='pm-suspend'
-  else
-    choices[suspend]='echo -n mem >/sys/power/state'
-  fi
-
-  have pm-hibernate && choices[hibernate]='pm-hibernate'
-else
-  have sudo || errorout 'no sudo binary found'
-
-  choices[shutdown]='sudo systemctl poweroff'
-  choices[reboot]='sudo systemctl reboot'
-
-  if have pm-suspend; then
-    choices[suspend]='sudo pm-suspend'
-  else
-    choices[suspend]='sudo /bin/sh -c "echo -n mem >/sys/power/state"'
-  fi
-
-  have pm-hibernate && choices[hibernate]='pm-hibernate'
-fi
+choices[shutdown]='systemctl poweroff'
+choices[reboot]='systemctl reboot'
+choices[suspend]='systemctl suspend'
 
 dmenu="dmenu ${DMENU_OPTIONS:--i}"
 
