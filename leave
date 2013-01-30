@@ -20,7 +20,7 @@ have() { which $1 &>/dev/null; }
 
 declare -A choices
 
-choices[logout]='pkill X'
+choices[logout]='systemctl --user exit'
 choices[shutdown]='systemctl poweroff'
 choices[reboot]='systemctl reboot'
 choices[suspend]='systemctl suspend'
