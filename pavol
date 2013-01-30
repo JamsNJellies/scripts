@@ -31,20 +31,20 @@ YPOS=$[$YRES * 4 / 5]                   # vertical positioning
 function set_volume()
 {
   CURVOL=$1
-  pamixer --set-volume $CURVOL
+  ponymix set-volume $CURVOL
 }
 
 # Gets the current volume
 function get_volume()
 {
-    MIXER=$(pamixer --get-volume)
+    MIXER=$(ponymix get-volume)
     echo $MIXER
 }
 
 # Get muted ? returns boolean
 function get_muted()
 {
-    MUTED=$(pamixer --get-mute)
+    MUTED=$(ponymix is-muted)
     echo $MUTED
 }
 
@@ -70,12 +70,12 @@ then
     set_volume $CURVOL
 elif [[ $1 == "--toggle-mute" ]]
 then
-    if [[ $MUTE == "false" ]]
+    if [[ $MUTED ]]
     then
-        pamixer --mute
-        CURVOL=0
+        ponymix unmute
     else
-        pamixer --unmute
+        ponymix toggle
+        CURVOL=0
     fi
 fi
 
