@@ -1,7 +1,0 @@
-#!/bin/bash
-# update the /tmp/weather file
-# remove original file
-rm -rf /tmp/weather
-
-# create new information
-weather2 32084 > /tmp/weather

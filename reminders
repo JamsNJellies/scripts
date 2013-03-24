@@ -1,4 +1,0 @@
-#!/bin/sh
-# pop-up daily reminders
-
-remind -q -g ~/.reminders | xmessage -center -file - 
