@@ -1,0 +1,85 @@
+#!/bin/bash
+# Status script for dwm
+# colours: 01:normal 02:white 03:red 04:green 05:yellow 
+# 06:blue 07:cyan 08:magenta 09:grey
+
+music(){
+    track="$(mpc current)"
+    artist="${track%%- *}"
+    title="${track##*- }"
+    if [[ -n "$artist" ]]; then
+        echo -e "\x08$artist\x01\x06$title\x01 •"
+    fi
+}
+
+bat(){
+    onl="$(grep "on-line" <(acpi -V))"
+    charge="$(awk '{print +$4}' <(acpi -b))"
+    remain="$(awk '{print $5}' <(acpi -b))"
+    if [[ ( -z $onl && $charge -gt 20 ) ]]; then 
+        echo -e "BAT \x06$charge% $remain\x01"
+    elif [[ ( -z $onl && $charge -le 20 ) ]]; then
+        echo -e "BAT \x03$charge% $remain\x01"
+    else
+        echo -e "AC \x06$charge%\x01"
+    fi
+}
+
+mem(){
+	mem="$(awk '/^-/ {print $3}' <(free -m))"
+	echo -e "\x04$mem\x01"
+}
+
+cpu(){
+    read cpu a b c previdle rest < /proc/stat 
+    prevtotal=$((a+b+c+previdle))
+    sleep 0.5 
+    read cpu a b c idle rest < /proc/stat 
+    total=$((a+b+c+idle))
+    cpu="$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal)))%" 
+    echo -e "\x05$cpu\x01" 
+}
+
+lda(){
+    lda="$(awk '{print $1,$2,$3}' </proc/loadavg)" 
+    echo -e "\x08$lda\x01" 
+}
+
+hdd(){
+    hdd="$(df -P | awk '/^\/dev/{s=s (s?" ":"") $5} END {printf "%s",s}')" 
+    echo -e "\x08$hdd\x01" 
+}
+
+eml(){
+	maildirs="$HOME/Mail/*/INBOX/new/"
+	ml="$(find $maildirs -type f | wc -l)"
+	if [[ $ml -eq 0 ]]; then
+        echo -n "0"
+    else
+        echo -en "\x03$ml\x01"
+    fi
+}
+
+int(){
+	host google.com>/dev/null &&   
+    echo -e "\x06ON\x01" || echo -e "\x03OFF\x01"
+}
+
+vol(){
+        vol="$(ponymix get-volume)"
+        if ponymix is-muted; then
+          echo -e "\x03MUTE\x01"
+        else
+          echo -e "\x04$vol%\x01"
+        fi
+}
+
+dte(){
+	dte1="$(date "+%a %d %b")"
+	dte2="$(date "+%I:%M")"
+	echo -e "\x09$dte1\x01 \x02$dte2\x01"
+}
+
+   # Pipe to status bar
+   xsetroot -name "$(bat) • $(cpu) $(mem) • $(lda) • $(vol) • $(dte) "
+

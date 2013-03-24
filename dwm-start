@@ -1,0 +1,15 @@
+#!/bin/sh
+
+while true
+do 
+  $HOME/.bin/dwm-status
+  sleep 2s
+done &
+
+while true 
+do
+dwm > /dev/null
+done
+
+# to log stderrors to a file 
+# while true; do dwm 2> ~/Build/dwm/dwm.log; done;

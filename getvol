@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ponymix is-muted; then
+  echo "<fc=#FF0000>mute</fc>"
+else
+  echo `ponymix get-volume`'%'
+fi
+

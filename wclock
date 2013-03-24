@@ -1,0 +1,100 @@
+#!/bin/sh
+# Command-line world clock
+# Taken from  http://stackoverflow.com/questions/370075/command-line-world-clock
+# Modified by Yu-Jie Lin
+
+# usage:
+#   cliclock.sh [[zonefile|zonename] ...]
+#
+# zonename can be full or partial, e.g. America/New_York or 'new york'
+#
+# default ~/.worldclock.zones and zonefile looks like:
+# US/Pacific
+# Europe/Berlin
+# Chile/Continental
+# new york
+# Los Angeles
+
+: ${WORLDCLOCK_FORMAT:='+%Y-%m-%d %H:%M:%S %Z'}
+
+if (( $# == 0 )); then
+  : ${WORLDCLOCK_ZONES:=$HOME/.worldclock.zones}
+  if [[ ! -f $WORLDCLOCK_ZONES ]]; then
+    echo 'no zones to display' >&2
+    exit 1
+  fi
+  OLDIFS="$IFS"
+  IFS=$'\n'
+  WORLDCLOCK_ZONES=($(cat "$WORLDCLOCK_ZONES"))
+  IFS="$OLDIFS"
+else
+  while (( $# > 0)); do
+    if [[ -f "$1" ]]; then
+      OLDIFS="$IFS"
+      IFS=$'\n'
+      WORLDCLOCK_ZONES=("${WORLDCLOCK_ZONES[@]}" $(cat "$1"))
+      IFS="$OLDIFS"
+    else
+      WORLDCLOCK_ZONES=("${WORLDCLOCK_ZONES[@]}" "$1")
+    fi
+    shift
+  done
+fi
+
+VALID_ZONES=($(find /usr/share/zoneinfo/posix | tail -n +2 | cut -c 27-))
+shopt -s nocasematch
+# Checking zones and set the max length
+check_zone() {
+  local zone z
+  ret=
+  z="*${1// /?}*"
+  for zone in "${VALID_ZONES[@]}"; do
+    if [[ $zone == $z ]]; then
+      ret="$zone"
+      return
+    fi
+    #  match first zone with $zone as substring
+    if [[ ! -z $ret ]] && [[ $zone == $z ]]; then
+      ret="$zone"
+    fi
+  done
+}
+
+zones=()
+MAX_ZONE_LEN=0
+for zone in "${WORLDCLOCK_ZONES[@]}"; do
+  check_zone "$zone"
+  if [[ -z $ret ]]; then
+    echo invalid zone $zone >&2
+    continue
+  fi
+  zone="$ret"
+  zones=("${zones[@]}" "$zone")
+  (( ${#zone} > MAX_ZONE_LEN )) && MAX_ZONE_LEN=${#zone}
+done
+unset VALID_ZONES
+
+if (( ${#zones[@]} == 0 )); then
+  echo 'no zones to display' >&2
+  exit 1
+fi
+
+# Some zones are invalid, keep error message for 3 seconds
+(( ${#zones[@]} != ${#WORLDCLOCK_ZONES[@]} )) && sleep 3
+unset WORLDCLOCK_ZONES
+
+while :; do
+  clear
+  now="$(date +%s)"
+  for zone in "${zones[@]}"; do
+    printf "%-${MAX_ZONE_LEN}s  %s\n" "$zone" "$(TZ=$zone date -d "@$now" "$WORLDCLOCK_FORMAT")"
+  done
+  # Allow to elegantly quit this script
+  if read -n 1 -t 1 -s; then
+    case "$REPLY" in
+      q|Q)
+        break
+        ;;
+    esac
+  fi
+done
