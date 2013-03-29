@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# ~/.bin/mailcount script to display new email in tmux
+# Kevin Casucci 2012
+#
+
+maildirs="$HOME/Mail/*/INBOX/new/"
+mail="$(find $maildirs -type f | wc -l)"
+
+[ $mail -gt 0 ] && echo -n "✉ $mail #[fg=black,bright]•" || exit 0
