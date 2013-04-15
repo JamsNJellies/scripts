@@ -76,7 +76,7 @@ vol(){
 
 dte(){
 	dte1="$(date "+%a %d %b")"
-	dte2="$(date "+%I:%M")"
+	dte2="$(date "+%R")"
 	echo -e "\x09$dte1\x01 \x02$dte2\x01"
 }
 
