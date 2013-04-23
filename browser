@@ -7,7 +7,6 @@
 #
 ###
 
-#browser='firefox'
 browser='chromium'
 
 [[ -n "$DISPLAY" ]] || exit 1
