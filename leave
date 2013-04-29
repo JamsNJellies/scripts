@@ -21,8 +21,8 @@ have() { which $1 &>/dev/null; }
 declare -A choices
 
 choices[logout]='systemctl --user exit'
-choices[shutdown]='systemctl poweroff'
-choices[reboot]='systemctl reboot'
+choices[shutdown]='sudo systemctl --force poweroff'
+choices[reboot]='sudo systemctl --force reboot'
 choices[suspend]='systemctl suspend'
 
 dmenu="dmenu ${DMENU_OPTIONS:--i}"
