@@ -17,9 +17,9 @@ bat(){
     charge="$(awk '{print +$4}' <(acpi -b))"
     remain="$(awk '{print $5}' <(acpi -b))"
     if [[ ( -z $onl && $charge -gt 20 ) ]]; then 
-        echo -e "BAT \x06$charge% $remain\x01"
+        echo -e "\x09BAT \x06$charge% $remain\x01"
     elif [[ ( -z $onl && $charge -le 20 ) ]]; then
-        echo -e "BAT \x03$charge% $remain\x01"
+        echo -e "\x09BAT \x03$charge% $remain\x01"
     else
         echo -e "AC \x06$charge%\x01"
     fi
