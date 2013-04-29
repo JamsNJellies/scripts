@@ -81,5 +81,4 @@ dte(){
 }
 
    # Pipe to status bar
-   xsetroot -name "$(music) $(bat) • $(cpu) $(mem) • $(lda) • $(vol) • $(dte) "
-
+   xsetroot -name "$(music) $(bat) • $(cpu) $(mem) • $(lda) • $(eml) • $(vol) • $(dte) "
