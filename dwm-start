@@ -4,6 +4,7 @@ while true
 do 
   conky | while read -r; do xsetroot -name "$REPLY"; done
   # $HOME/.bin/dwm-status
+  # dwmstatus
   sleep 2s
 done &
 
