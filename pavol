@@ -88,5 +88,17 @@ then
   rm  -f "$PIPE") &
 fi
 
+function showvol(){
+        vol="$(ponymix get-volume)"
+        if ponymix is-muted; then
+          echo -e "MUTE  "
+        else
+          echo -e "$vol%  "
+        fi
+}
+
+KVOL=$(showvol)
+
 # feed the pipe
-(echo $[$CURVOL]| gdbar -l "^i($ICON)" -fg "$BAR_FG" -bg "$BAR_BG" -w "$BAR_WIDTH"  ; sleep "$SECS" ) > "$PIPE"
+# (echo $[$CURVOL] | gdbar -l "^i($ICON)" -fg "$BAR_FG" -bg "$BAR_BG" -w "$BAR_WIDTH"  ; sleep "$SECS" ) > "$PIPE"
+(echo $[$CURVOL] | gdbar -l "$KVOL" -fg "$BAR_FG" -bg "$BAR_BG" -w "$BAR_WIDTH"  ; sleep "$SECS" ) > "$PIPE"
