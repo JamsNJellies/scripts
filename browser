@@ -7,8 +7,8 @@
 #
 ###
 
-# browser='chromium'
-browser='vimtab'
+browser='chromium'
+# browser='vimtab'
 
 [[ -n "$DISPLAY" ]] || exit 1
 
