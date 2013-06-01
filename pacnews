@@ -9,7 +9,7 @@ shopt -s nullglob
 
 files=( "${1:-/etc}"/*.pacnew )
 
-#read -r -a files < <(find "${1:-/etc}" -name '*.pacnew' -print)
+read -r -a files < <(find "${1:-/etc}" -name '*.pacnew' -print)
 
 (( ${#files[@]} )) || exit 1
 
