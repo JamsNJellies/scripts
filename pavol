@@ -9,7 +9,8 @@
 SECS="1"            # sleep $SECS
 BG="#303030"        # background colour of window
 FG="#606060"        # foreground colour of text/icon
-BAR_FG="#60b48a"    # foreground colour of volume bar
+# BAR_FG="#60b48a"    # foreground colour of volume bar
+BAR_FG="#a6c292"    # foreground colour of volume bar
 BAR_BG="#606060"    # background colour of volume bar
 HEIGHT="50"         # window height
 WIDTH="400"         # window width
@@ -22,10 +23,12 @@ PULSE_MAX_VOL=100
 PIPE="/tmp/pulsevolpipe"
 
 # Lets find the appropriate positioning for the volume bar
-XRES=`xdpyinfo|grep 'dimensions:'|awk '{print $2}'|cut -dx -f1`
-XPOS=$[$XRES / 2 - $WIDTH / 2]          # horizontal positioning
-YRES=`xdpyinfo|grep 'dimensions:'|awk '{print $2}'|cut -dx -f2`
-YPOS=$[$YRES * 4 / 5]                   # vertical positioning
+# XRES=`xdpyinfo|grep 'dimensions:'|awk '{print $2}'|cut -dx -f1`
+# XPOS=$[$XRES / 2 - $WIDTH / 2]          # horizontal positioning
+XPOS=500          # horizontal positioning
+# YRES=`xdpyinfo|grep 'dimensions:'|awk '{print $2}'|cut -dx -f2`
+# YPOS=$[$YRES * 4 / 5]                   # vertical positioning
+YPOS=400                   # vertical positioning
 
 # Sets the desired volume
 function set_volume()
