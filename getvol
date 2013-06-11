@@ -1,8 +1,12 @@
 #!/bin/bash
+# script to show volume in conky
 
-if ponymix is-muted; then
-  echo "<fc=#FF0000>mute</fc>"
+AMIXOUT="$(amixer -M get "Master" | tail -n 1)"
+MUTE="$(cut -d '[' -f 4 <<<"$AMIXOUT")"
+if [ "$MUTE" = "off]" ]; then
+  echo "^fg(red)MUTE^fg()"
 else
-  echo `ponymix get-volume`'%'
+  VOL="$(cut -d '[' -f 2 <<<"$AMIXOUT" | sed 's/%.*//g')%"
+  echo "^fg(grey55)$VOL^fg()"
 fi
 
