@@ -92,7 +92,7 @@ setup_backup_for() { # {{{
 # A normal, file and pkg list backup
 daily_destination='/media/usbhd-sdb1/Yael/daily'
 daily_includes=( /home/zeke /etc /usr /var /boot )
-daily_excludes=( .torrents Desktop Downloads Git Movies Music remote V* prosperous@192.168.2.2 lost+found )
+daily_excludes=( .torrents Desktop Downloads Movies Music remote V* prosperous@192.168.2.2 lost+found )
 daily_execute=rsync_and_pkg_list
 
 # The same except to a different destination
