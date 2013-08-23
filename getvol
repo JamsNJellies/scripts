@@ -1,12 +1,13 @@
 #!/bin/bash
 # script to show volume in conky
 
+REGCOLOUR="#b6850e"
 AMIXOUT="$(amixer -M get "Master" | tail -n 1)"
 MUTE="$(cut -d '[' -f 4 <<<"$AMIXOUT")"
 if [ "$MUTE" = "off]" ]; then
   echo "^fg(red)MUTE^fg()"
 else
   VOL="$(cut -d '[' -f 2 <<<"$AMIXOUT" | sed 's/%.*//g')%"
-  echo "^fg(grey55)$VOL^fg()"
+  echo "^fg($REGCOLOUR)$VOL^fg()"
 fi
 
