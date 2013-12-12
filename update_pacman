@@ -4,6 +4,7 @@ fakedb=/dev/shm/fakepacdb
 
 pkgs=$(pacman --dbpath "$fakedb" -Qqu | wc -l)
 aurpkgs=$(cower -udf 2> /dev/null | wc -l)
+ICON="$HOME/.icons/pacman.png"
 
 unset msg1
 unset msg2
@@ -19,5 +20,5 @@ fi
 
 let packages=${pkgs}+${aurpkgs}
 if [[ ${packages} -gt 0 ]]; then
-    xmessage -title "Package Updates" -timeout 20 -center "There are ${packages} out of date packages (${msg1}${msg2})"
+    notify-send -i "${ICON}" --expire-time=10000 "There are ${packages} out of date packages (${msg1}${msg2})"
 fi
